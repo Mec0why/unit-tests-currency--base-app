@@ -91,3 +91,32 @@ it('should render proper info about conversion when USD -> USD', () => {
     cleanup();
   }
 });
+it('should render Wrong value… when value < 0', () => {
+  // prepare test cases
+  const testCasesNegativeValues = [
+    { amount: '-3548', from: 'PLN', to: 'USD' },
+    { amount: '-78', from: 'USD', to: 'PLN' },
+    { amount: '-679', from: 'PLN', to: 'USD' },
+    { amount: '-12', from: 'USD', to: 'PLN' },
+    { amount: '-89', from: 'USD', to: 'USD' },
+    { amount: '-1', from: 'PLN', to: 'PLN' },
+  ];
+
+  for (const testObj of testCasesNegativeValues) {
+    // render component with params
+    render(
+      <ResultBox
+        from={testObj.from}
+        to={testObj.to}
+        amount={parseInt(testObj.amount)}
+      />
+    );
+
+    // find component output
+    const output = screen.getByTestId('outputNegative');
+
+    // check if output is USD = USD
+    expect(output).toHaveTextContent('Wrong value...');
+    cleanup();
+  }
+});
