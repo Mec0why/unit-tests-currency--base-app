@@ -49,3 +49,45 @@ it('should render proper info about conversion when USD -> PLN', () => {
     cleanup();
   }
 });
+it('should render proper info about conversion when PLN -> PLN', () => {
+  // prepare test cases
+  const testCasesSameFromToPLN = ['152', '18', '4', '1253'];
+
+  for (const testObj of testCasesSameFromToPLN) {
+    // render component with params
+    render(<ResultBox from='PLN' to='PLN' amount={parseInt(testObj)} />);
+
+    // find component output
+    const output = screen.getByTestId('output');
+
+    // check if output is PLN = PLN
+    expect(output).toHaveTextContent(
+      `${formatAmountInCurrency(testObj, 'PLN')} = ${formatAmountInCurrency(
+        testObj,
+        'PLN'
+      )}`
+    );
+    cleanup();
+  }
+});
+it('should render proper info about conversion when USD -> USD', () => {
+  // prepare test cases
+  const testCasesSameFromToUSD = ['854', '645', '348', '753'];
+
+  for (const testObj of testCasesSameFromToUSD) {
+    // render component with params
+    render(<ResultBox from='USD' to='USD' amount={parseInt(testObj)} />);
+
+    // find component output
+    const output = screen.getByTestId('output');
+
+    // check if output is USD = USD
+    expect(output).toHaveTextContent(
+      `${formatAmountInCurrency(testObj, 'USD')} = ${formatAmountInCurrency(
+        testObj,
+        'USD'
+      )}`
+    );
+    cleanup();
+  }
+});
